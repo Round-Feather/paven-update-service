@@ -1,0 +1,49 @@
+quarkus:
+  application:
+    name: paven-core-links-service
+  redis:
+    hosts: redis://127.0.0.1:6379
+    timeout: 1s
+    lockTimeout: 60
+    lockAcquireTimeout: 300
+  smallrye-openapi:
+    store-schema-directory: target/openapi
+  log:
+    console:
+      enable: true
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%M:%L - %X{dd.trace_id} %X{dd.span_id} - %m%n"
+    category:
+      "com.roundfeather.paven.core":
+        level: DEBUG
+    min-level: ALL
+
+  index-dependency:
+    paven-client-util:
+      group-id: com.roundfeather.paven.utils
+      artifact-id: paven-client-utils
+
+  rest-client:
+    "com.roundfeather.paven.core.update.api.ConfigClient":
+      url: https://core-config-service-dev-ebc5puexkq-wl.a.run.app
+
+http:
+  read-timeout: 60000
+
+datastore:
+  namespace: nsGlobalPavenDev
+
+excluded:
+  urls:
+    endsWith: "/update/schedule/users"
+    contains: "/q, favicon, read-only"
+    noJwtEndsWith: "/update/schedule/user"
+
+topics:
+  pubsub:
+    userMonthly: projects/base-dev-v3/topics/userMonthly
+
+userInfo:
+  iss: https://paven-dev.us.auth0.com/
+  aud:
+    - https://paven-dev.us.auth0.com/api/v2/
+    - https://paven-dev.us.auth0.com/userinfo

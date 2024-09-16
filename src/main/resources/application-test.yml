@@ -1,0 +1,17 @@
+quarkus:
+  http:
+    test-port: 8081
+    cors: true
+  log:
+    console:
+      enable: true
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%M:%L - %X{dd.trace_id} %X{dd.span_id} - %m%n"
+    category:
+      "com.roundfeather.paven.core":
+        level: DEBUG
+    min-level: ALL
+app:
+  cache:
+    default-tenant: "common"
+
+

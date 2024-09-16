@@ -1,0 +1,37 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: core-update-service
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    google.com/cloudbuild-project-slug: paven-common-v3
+    google.com/cloudbuild-location: us-west2
+    sonarqube.org/project-key: Round-Feather_paven-update-service_38066feb-d133-49a4-bddb-afaefb1a35a8
+  links:
+    - url: https://event-catalog-dev-quuvamph7q-wl.a.run.app/docs/services/CoreUpdateService/1.0.0/
+      title: EventCatalog
+    - url: https://roundfeather-paven.atlassian.net/wiki/x/AgC-Tg
+      title: Confluence
+spec:
+  type: service
+  lifecycle: production
+  owner: guests
+  providesApis:
+    - core-update-api
+  consumesApis:
+    - core-config-api
+  dependsOn:
+    - paven-event-utils
+    - paven-persistence-utils
+---
+apiVersion: backstage.io/v1alpha1
+metadata:
+  name: core-calculations-api
+kind: API
+spec:
+  type: openapi
+  lifecycle: production
+  owner: guests
+  definition:
+    $text: https://storage.googleapis.com/paven-common-public-assets/openapi/paven-core-calculations-service/openapi.yaml
