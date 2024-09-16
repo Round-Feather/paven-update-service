@@ -1,8 +1,8 @@
 package com.roundfeather.paven.core.update.controller;
 
 import com.roundfeather.paven.core.update.service.UserUpdateService;
+import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 @QuarkusTest
 class ScheduleControllerTest {
 
-    @Inject
+    @InjectMock
     UserUpdateService userService;
 
     @Test
