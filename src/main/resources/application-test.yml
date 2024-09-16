@@ -10,8 +10,9 @@ quarkus:
       "com.roundfeather.paven.core":
         level: DEBUG
     min-level: ALL
-app:
-  cache:
-    default-tenant: "common"
 
-
+userInfo:
+  iss: https://paven-dev.us.auth0.com/
+  aud:
+    - https://paven-dev.us.auth0.com/api/v2/
+    - https://paven-dev.us.auth0.com/userinfo

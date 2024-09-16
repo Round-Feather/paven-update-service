@@ -2,7 +2,7 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: core-update-service
+  name: update-service
   annotations:
     backstage.io/techdocs-ref: dir:.
     google.com/cloudbuild-project-slug: paven-common-v3
