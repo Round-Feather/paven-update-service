@@ -8,10 +8,13 @@ import com.roundfeather.paven.core.update.config.UserInfoConfig;
 import com.roundfeather.paven.core.update.model.MinimalUser;
 import com.roundfeather.paven.model.config.Tenant;
 import com.roundfeather.paven.utils.events.clients.EventClient;
+import com.roundfeather.paven.utils.http.error.exception.PavenException;
+import com.roundfeather.paven.utils.http.error.model.ErrorItem;
 import com.roundfeather.persistence.utils.datastore.DatastoreNamespace;
 import com.roundfeather.persistence.utils.datastore.DatastoreRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.nio.charset.StandardCharsets;
@@ -28,22 +31,29 @@ public class UserUpdateService {
     public static final String OS_HEADER_KEY = "os";
     public static final String USER_INFO_HEADER_KEY = "X-Apigateway-Api-Userinfo";
 
-    @Inject
     ObjectMapper objectMapper;
-
-    @Inject
     EventClient eventClient;
-
-    @Inject
     DatastoreRepository<MinimalUser> repository;
-
-    @Inject
     UserInfoConfig userInfoConfig;
-    @Inject
     DatastoreConfig datastoreConfig;
 
     @RestClient
     ConfigClient configClient;
+
+    @Inject
+    public UserUpdateService(
+            ObjectMapper objectMapper,
+            EventClient eventClient,
+            DatastoreRepository<MinimalUser> repository,
+            UserInfoConfig userInfoConfig,
+            DatastoreConfig datastoreConfig
+    ) {
+        this.objectMapper = objectMapper;
+        this.eventClient = eventClient;
+        this.repository = repository;
+        this.userInfoConfig = userInfoConfig;
+        this.datastoreConfig = datastoreConfig;
+    }
 
     public void updateAllUsers() {
         repository.list(DatastoreNamespace.of(datastoreConfig.namespace())).stream()
@@ -74,7 +84,10 @@ public class UserUpdateService {
 
             return mu.getUserKey();
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new PavenException(
+                    ErrorItem.builder().build(),
+                    Response.Status.INTERNAL_SERVER_ERROR,
+                    e);
         }
     }
 }

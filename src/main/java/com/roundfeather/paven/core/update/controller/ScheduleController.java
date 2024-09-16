@@ -12,8 +12,12 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 @Path("/paven/v1/update/schedule")
 public class ScheduleController {
 
-    @Inject
     UserUpdateService userService;
+
+    @Inject
+    public ScheduleController(UserUpdateService userService) {
+        this.userService = userService;
+    }
 
     @POST
     @Path("/users")
