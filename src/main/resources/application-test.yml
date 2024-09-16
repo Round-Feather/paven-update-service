@@ -16,3 +16,6 @@ userInfo:
   aud:
     - https://paven-dev.us.auth0.com/api/v2/
     - https://paven-dev.us.auth0.com/userinfo
+
+datastore:
+  namespace: nsGlobalPavenDev
