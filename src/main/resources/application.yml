@@ -34,9 +34,9 @@ datastore:
 
 excluded:
   urls:
-    endsWith: "/update/schedule/users"
+    endsWith: "/paven/v1/update/schedule/users"
     contains: "/q, favicon, read-only"
-    noJwtEndsWith: "/update/schedule/user"
+    noJwtEndsWith: "/paven/v1/update/schedule/users"
 
 topics:
   pubsub:
