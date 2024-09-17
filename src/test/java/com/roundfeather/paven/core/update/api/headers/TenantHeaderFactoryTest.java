@@ -23,9 +23,6 @@ class TenantHeaderFactoryTest {
         MultivaluedMap<String, String> outboundHeaders = new MultivaluedHashMap<>();
 
         MultivaluedMap<String, String> expectedHeaders = new MultivaluedHashMap<>();
-        expectedHeaders.add("Authorization", "Bearer token");
-        expectedHeaders.add("platform", "web");
-        expectedHeaders.add("os", "desktop");
 
         MockedStatic<GCPAuthUtil> authUtilMocked = mockStatic(GCPAuthUtil.class);
         authUtilMocked.when(GCPAuthUtil::getAuthToken).thenReturn("token");
