@@ -11,6 +11,10 @@ quarkus:
         level: DEBUG
     min-level: ALL
 
+  rest-client:
+    config-service:
+      url: https://core-config-service-dev-ebc5puexkq-wl.a.run.app
+
 userInfo:
   iss: https://paven-dev.us.auth0.com/
   aud:

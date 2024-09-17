@@ -8,12 +8,13 @@ import java.io.IOException;
 
 public class GCPAuthUtil {
 
-    public static String getAuthToken() {
+    public static String getAuthToken(String audience) {
         try {
             IdTokenProvider tokenProvider = (IdTokenProvider) GoogleCredentials.getApplicationDefault();
 
             IdTokenCredentials tokenCredential = IdTokenCredentials.newBuilder()
                     .setIdTokenProvider(tokenProvider)
+                    .setTargetAudience(audience)
                     .build();
 
             tokenCredential.refresh();

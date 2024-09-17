@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mockStatic;
 
 @QuarkusTest
@@ -21,11 +22,15 @@ class TenantHeaderFactoryTest {
     void updateTest() {
         MultivaluedMap<String, String> inboundHeaders = new MultivaluedHashMap<>();
         MultivaluedMap<String, String> outboundHeaders = new MultivaluedHashMap<>();
+        outboundHeaders.add("audience", "quarkus.rest-client.config-service.url");
 
         MultivaluedMap<String, String> expectedHeaders = new MultivaluedHashMap<>();
+        expectedHeaders.add("Authorization", "Bearer token");
+        expectedHeaders.add("platform", "web");
+        expectedHeaders.add("os", "desktop");
 
         MockedStatic<GCPAuthUtil> authUtilMocked = mockStatic(GCPAuthUtil.class);
-        authUtilMocked.when(GCPAuthUtil::getAuthToken).thenReturn("token");
+        authUtilMocked.when(() -> GCPAuthUtil.getAuthToken(any())).thenReturn("token");
 
         MultivaluedMap<String, String> actualHeaders = headerFactory.update(inboundHeaders, outboundHeaders);
 

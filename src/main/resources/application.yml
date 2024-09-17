@@ -23,7 +23,7 @@ quarkus:
       artifact-id: paven-client-utils
 
   rest-client:
-    "com.roundfeather.paven.core.update.api.ConfigClient":
+    config-service:
       url: https://core-config-service-dev-ebc5puexkq-wl.a.run.app
 
 http:
