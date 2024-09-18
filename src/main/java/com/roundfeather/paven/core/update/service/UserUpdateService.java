@@ -15,7 +15,9 @@ import com.roundfeather.persistence.utils.datastore.DatastoreRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.resteasy.client.exception.ResteasyWebApplicationException;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
@@ -23,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
+@Slf4j
 public class UserUpdateService {
     public static final String TENANT_HEADER_KEY = "tenant";
     public static final String SPACE_HEADER_KEY = "spaceId";
@@ -88,6 +91,9 @@ public class UserUpdateService {
                     ErrorItem.builder().build(),
                     Response.Status.INTERNAL_SERVER_ERROR,
                     e);
+        } catch (ResteasyWebApplicationException e) {
+            log.debug(String.format("User: %d does not have a tenant", mu.getUserKey()), e);
+            return mu.getUserKey();
         }
     }
 }
